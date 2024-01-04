@@ -16,7 +16,7 @@ const ExampleComponent = () => {
 
   return (
     <div className="container">
-       <h1 className="welcome-heading" >Welcome to My App</h1>
+      <h1 className="welcome-heading">Welcome to My App</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
           <label htmlFor="name">Name:</label>
@@ -50,9 +50,11 @@ const ExampleComponent = () => {
           {errors.message && <p className="error-message">{errors.message.message}</p>}
         </div>
 
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
-          Submit
-        </button>
+        <div className="centered-button">
+          <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
+            Submit
+          </button>
+        </div>
       </form>
 
       {submittedData && (

@@ -1,12 +1,13 @@
-
 import React from 'react';
-import ExampleComponent from './ExampleComponent'; // Assuming the file name is 'ExampleComponent.js'
+import ExampleComponent from './ExampleComponent'; 
+import './App.css';
+
 
 const App = () => {
   return (
     <div>
-      <h1>Welcome to My App</h1>
-      <ExampleComponent /> {/* Render the ExampleComponent */}
+      <h1 className="welcome-heading">Welcome to My App</h1>
+      <ExampleComponent />
     </div>
   );
 };

@@ -10,12 +10,13 @@ const ExampleComponent = () => {
     console.log('Form submitted:', data);
     setSubmittedData(data);
     reset();
-    // You can add a pop-up or notification here for successful submission
+    
     alert('Form submitted successfully!');
   };
 
   return (
     <div className="container">
+       <h1 className="welcome-heading" >Welcome to My App</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
           <label htmlFor="name">Name:</label>

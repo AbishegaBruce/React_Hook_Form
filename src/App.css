@@ -36,8 +36,10 @@ body {
   
 .submitted-data-heading {
   color: blue;
+    text-align:center;
 }
 
 .welcome-heading {
   color: green; 
+    text-align:center;
 }

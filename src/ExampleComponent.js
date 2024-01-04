@@ -1,109 +1,54 @@
-import React, { useState } from 'react';
-import './App.css'; // Import your custom CSS file
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import './App.css';
 
 const ExampleComponent = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
-  });
+  const [submittedData, setSubmittedData] = React.useState(null);
+  const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
-  const [formErrors, setFormErrors] = useState({
-    name: '',
-    email: '',
-    message: '',
-  });
-
-  const [submittedData, setSubmittedData] = useState(null);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    let isValid = true;
-    const errors = {}; // Define errors object to store validation errors
-
-    // Validation logic for each field
-    if (!formData.name.trim()) {
-      errors.name = 'Name is required';
-      isValid = false;
-    }
-
-    if (!formData.email.trim()) {
-      errors.email = 'Email is required';
-      isValid = false;
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      errors.email = 'Invalid email address';
-      isValid = false;
-    }
-
-    if (!formData.message.trim()) {
-      errors.message = 'Message is required';
-      isValid = false;
-    }
-
-    setFormErrors(errors); // Store validation errors
-
-    if (isValid) {
-      // Perform submission or API call here
-      console.log('Form submitted:', formData);
-      setSubmittedData(formData); // Store submitted data
-      setFormData({ // Reset form fields after successful submission
-        name: '',
-        email: '',
-        message: '',
-      });
-      setFormErrors({}); // Clear form errors after successful submission
-
-      // Show success message in pop-up window
-      alert('Form submitted successfully!');
-    }
+  const onSubmit = (data) => {
+    console.log('Form submitted:', data);
+    setSubmittedData(data);
+    reset();
+    // You can add a pop-up or notification here for successful submission
+    alert('Form submitted successfully!');
   };
 
   return (
     <div className="container">
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
           <label htmlFor="name">Name:</label>
           <input
             type="text"
             id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
+            {...register('name', { required: 'Name is required' })}
             className="border border-gray-300 rounded px-3 py-2 w-full"
           />
-          {formErrors.name && <p className="error-message">{formErrors.name}</p>}
+          {errors.name && <p className="error-message">{errors.name.message}</p>}
         </div>
+
         <div>
           <label htmlFor="email">Email:</label>
           <input
             type="email"
             id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
+            {...register('email', { required: 'Email is required', pattern: /^\S+@\S+$/i })}
             className="border border-gray-300 rounded px-3 py-2 w-full"
           />
-          {formErrors.email && <p className="error-message">{formErrors.email}</p>}
+          {errors.email && <p className="error-message">{errors.email.message}</p>}
         </div>
+
         <div>
           <label htmlFor="message">Message:</label>
           <textarea
             id="message"
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
+            {...register('message', { required: 'Message is required' })}
             className="border border-gray-300 rounded px-3 py-2 w-full"
-          ></textarea>
-          {formErrors.message && <p className="error-message">{formErrors.message}</p>}
+          />
+          {errors.message && <p className="error-message">{errors.message.message}</p>}
         </div>
+
         <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
           Submit
         </button>

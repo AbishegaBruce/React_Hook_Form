@@ -1,0 +1,15 @@
+/* input.css */
+
+/* Include Tailwind's base styles */
+@tailwind base;
+
+/* Custom styles for specific elements */
+.my-custom-class {
+ 
+  color: #FF0000;
+
+}
+@tailwind components;
+
+@tailwind utilities;
+

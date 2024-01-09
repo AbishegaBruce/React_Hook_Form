@@ -3,13 +3,20 @@ import { useForm } from 'react-hook-form';
 import './App.css';
 
 function App() {
-  const { register, handleSubmit, reset, formState: { isSubmitSuccessful } } = useForm();
+  const { register, handleSubmit, reset, formState: { isSubmitSuccessful, errors } } = useForm();
   const [submittedData, setSubmittedData] = useState([]);
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
 
   const onSubmit = (data) => {
-    setSubmittedData([...submittedData, data]);
-    window.alert('Form submitted successfully!');
-    reset();
+    if (data.name && data.email && data.message) {
+      setSubmittedData([...submittedData, data]);
+      window.alert('Form submitted successfully!');
+      reset();
+      setShowErrorMessage(false);
+    } else {
+      setShowErrorMessage(true);
+      window.alert('Please enter valid data.');
+    }
   };
 
   return (
@@ -20,18 +27,18 @@ function App() {
           {/* Form inputs */}
           <input
             type="text"
-            {...register('name')}
+            {...register('name', { required: true })}
             placeholder="Name"
             className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
           />
           <input
             type="email"
-            {...register('email')}
+            {...register('email', { required: true })}
             placeholder="Email"
             className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
           />
           <textarea
-            {...register('message')}
+            {...register('message', { required: true })}
             placeholder="Message"
             className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
           ></textarea>
@@ -58,6 +65,9 @@ function App() {
           ))}
         </div>
 
+        {showErrorMessage && <p className="text-red-500 mt-4 text-center">Please enter valid data.</p>}
+
+       
         {isSubmitSuccessful && <p className="text-green-500 mt-4 text-center">Form submitted successfully!</p>}
       </div>
     </div>
